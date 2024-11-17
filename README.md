@@ -8,14 +8,14 @@ This project, hosted at [GitHub - upgradableContract](https://github.com/faridra
 ```
 upgradableContract/
 ├── contracts/
-│   ├── OriginalContract.sol
-│   └── UpgradedContract.sol
+│   ├── MyContract.sol
+│   └── MyContractV2.sol
 ├── scripts/
-│   ├── deployOriginal.js
-│   ├── deployUpgraded.js
+│   ├── deployProxy.js
+│   ├── upgradeProxy.js
 │   └── interactWithContracts.js
 ├── test/
-│   └── contractTests.js
+│   └── myContractTest.js
 ├── dpTABI.json
 ├── upTABI.json
 ├── hardhat.config.js
@@ -68,18 +68,18 @@ module.exports = {
 
 ## Deployment Scripts
 
-### `deployOriginal.js`
+### `deployProxy.js`
 Deploys the initial version of the contract:
 ```javascript
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const Contract = await ethers.getContractFactory("OriginalContract");
-  console.log("Deploying OriginalContract...");
+  const Contract = await ethers.getContractFactory("MyContract");
+  console.log("Deploying MyContract...");
   const instance = await upgrades.deployProxy(Contract, [42], {
     initializer: "initialize",
   });
-  console.log("OriginalContract deployed to:", instance.address);
+  console.log("MyContract deployed to:", instance.address);
 }
 
 main()
@@ -90,16 +90,16 @@ main()
   });
 ```
 
-### `deployUpgraded.js`
+### `upgradeProxy.js`
 Deploys the upgraded version:
 ```javascript
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const ContractV2 = await ethers.getContractFactory("UpgradedContract");
-  console.log("Upgrading to UpgradedContract...");
+  const ContractV2 = await ethers.getContractFactory("MyContractV2");
+  console.log("Upgrading to MyContractV2...");
   const instance = await upgrades.upgradeProxy(process.env.HOLESKY_CONTRACT_ADDRESS, ContractV2);
-  console.log("Contract upgraded to UpgradedContract at:", instance.address);
+  console.log("Contract upgraded to MyContractV2 at:", instance.address);
 }
 
 main()
@@ -156,12 +156,12 @@ main()
 ## Usage
 1. **Deploy the original contract**:
    ```bash
-   npx hardhat run scripts/deployOriginal.js --network holesky
+   npx hardhat run scripts/deployProxy.js --network holesky
    ```
 
 2. **Upgrade the contract**:
    ```bash
-   npx hardhat run scripts/deployUpgraded.js --network holesky
+   npx hardhat run scripts/upgradeProxy.js --network holesky
    ```
 
 3. **Interact with the contracts**:
