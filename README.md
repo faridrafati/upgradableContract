@@ -1,21 +1,21 @@
 
-# ONFTCode - Upgradeable Smart Contracts with Hardhat
+# Upgradable Contract - Upgradeable Smart Contracts with Hardhat
 
 ## Overview
-This project demonstrates the deployment and interaction of upgradeable smart contracts using Hardhat and `ethers.js`. It includes JavaScript scripts for deploying and interacting with both the original and upgraded versions of a contract. The project leverages OpenZeppelin's upgradeable libraries to ensure the contracts can be improved over time while retaining their state and addresses.
+This project, hosted at [GitHub - upgradableContract](https://github.com/faridrafati/upgradableContract/tree/main), demonstrates the deployment and interaction of upgradeable smart contracts using Hardhat and `ethers.js`. It includes JavaScript scripts for deploying and interacting with both the original and upgraded versions of a contract. The project leverages OpenZeppelin's upgradeable libraries to ensure the contracts can be improved over time while retaining their state and addresses.
 
 ## Project Structure
 ```
 upgradableContract/
 ├── contracts/
-│   ├── MyContract.sol
-│   └── MyContractV2.sol
+│   ├── OriginalContract.sol
+│   └── UpgradedContract.sol
 ├── scripts/
-│   ├── deployProxy.js
-│   ├── upgradeProxy.js
-│   └── scripts.js
+│   ├── deployOriginal.js
+│   ├── deployUpgraded.js
+│   └── interactWithContracts.js
 ├── test/
-│   └── test.js
+│   └── contractTests.js
 ├── dpTABI.json
 ├── upTABI.json
 ├── hardhat.config.js
@@ -74,7 +74,7 @@ Deploys the initial version of the contract:
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const Contract = await ethers.getContractFactory("MyContract");
+  const Contract = await ethers.getContractFactory("OriginalContract");
   console.log("Deploying OriginalContract...");
   const instance = await upgrades.deployProxy(Contract, [42], {
     initializer: "initialize",
@@ -96,7 +96,7 @@ Deploys the upgraded version:
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const ContractV2 = await ethers.getContractFactory("MyContractV2");
+  const ContractV2 = await ethers.getContractFactory("UpgradedContract");
   console.log("Upgrading to UpgradedContract...");
   const instance = await upgrades.upgradeProxy(process.env.HOLESKY_CONTRACT_ADDRESS, ContractV2);
   console.log("Contract upgraded to UpgradedContract at:", instance.address);
