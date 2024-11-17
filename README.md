@@ -13,7 +13,7 @@ upgradableContract/
 ├── scripts/
 │   ├── deployProxy.js
 │   ├── upgradeProxy.js
-│   └── interactWithContracts.js
+│   └── scripts.js
 ├── test/
 │   └── myContractTest.js
 ├── dpTABI.json
@@ -110,7 +110,7 @@ main()
   });
 ```
 
-### `interactWithContracts.js`
+### `scripts.js`
 Interacts with the deployed contracts:
 ```javascript
 const { ethers } = require("ethers");
@@ -166,7 +166,7 @@ main()
 
 3. **Interact with the contracts**:
    ```bash
-   node scripts/interactWithContracts.js
+   node scripts/scripts.js
    ```
 
 ## License
