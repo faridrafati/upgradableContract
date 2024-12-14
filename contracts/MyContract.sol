@@ -10,12 +10,3 @@ contract MyContract is Initializable {
         myValue = _value;
     }
 }
-
-
-contract MyContract2 is Initializable{
-    uint256 public myValue;
-
-    function Initialize(uint256 _myValue) public initializer {
-        myValue = _myValue;
-    }
-}
